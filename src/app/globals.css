@@ -25,3 +25,24 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@import url('../styles/flipCard.css');
+@import url('../styles/progressBar.css');
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 30px;
+}
+
+
+.speaker-icon {
+  background-color: red;
+  padding: 10px;
+}
+
+.speaker-icon:hover {
+  background-color: blue;
+  color: #fff;
+}
