@@ -28,8 +28,11 @@ export default function FlipCard({ word, num, handlePronounce, turn = false }: F
             {imgSrc && <Image
               src={imgSrc}
               alt={`${en}-${ko}`}
-              width={1000}
-              height={500}
+              // width={1000}
+              // height={500}
+              style={{ objectFit: "contain" }}
+              fill={true}
+            // sizes="(max-width: 100px) 100vw"
             />}
           </div>
         </div>

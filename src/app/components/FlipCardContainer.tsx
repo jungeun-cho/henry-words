@@ -8,6 +8,10 @@ import { BRICKS_UNIT1, BRICKS_UNIT2, BRICKS_UNIT3, BRICKS_UNIT4, BRICKS_UNIT5, B
 import { LOOK_UNIT1, LOOK_UNIT2, LOOK_UNIT3, LOOK_UNIT4 } from '@/data/look_1a/1-4';
 
 import ProgressBar from './ProgressBar';
+import CircleArrowLeft from './icons/CircleArrowLeft';
+import CircleArrowRight from './icons/CircleArrowRight';
+
+type DirectionKey = 'ArrowLeft' | 'ArrowRight';
 
 const words = [
   ...BRICKS_UNIT1,
@@ -55,30 +59,9 @@ export default function FlipCardContainer() {
     }
   };
 
-  const handleFlipCard = (e: KeyboardEvent) => {
-    const { key } = e;
-
-    if (!["ArrowLeft", "ArrowRight", "Enter", "ArrowUp", "ArrowDown"].includes(key)) {
-      return null;
-    }
-
-    if (key === "Enter") {
-      handlePronounce(words[currentNum].en);
-      return;
-    }
-
-    if (key === "ArrowUp") {
-      setTurn(true);
-
-      return;
-    } else if (key === "ArrowDown") {
-      setTurn(false);
-
-      return;
-    }
-
+  const moveCard = (direction: DirectionKey) => {
     let cardIndex = currentNum;
-    if (key === "ArrowLeft") {
+    if (direction === "ArrowLeft") {
       cardIndex = currentNum - 1;
 
       if (cardIndex < 0) {
@@ -88,7 +71,7 @@ export default function FlipCardContainer() {
         // -3 => 7
         cardIndex = wordsLength.current + cardIndex;
       }
-    } else if (key === "ArrowRight") {
+    } else if (direction === "ArrowRight") {
       cardIndex = currentNum + 1;
 
       if (cardIndex >= wordsLength.current) {
@@ -100,6 +83,27 @@ export default function FlipCardContainer() {
       }
     }
     setCurrentNum(cardIndex);
+  }
+
+  const handleFlipCard = (e: KeyboardEvent) => {
+    const { key } = e;
+
+    if (!["ArrowLeft", "ArrowRight", "Enter", "ArrowUp", "ArrowDown"].includes(key)) {
+      return null;
+    }
+
+    switch (key) {
+      case "Enter":
+        return handlePronounce(words[currentNum].en);
+      case "ArrowUp":
+        return setTurn(true);
+      case "ArrowDown":
+        return setTurn(false);
+      case "ArrowLeft":
+      case "ArrowRight":
+        return moveCard(key);
+    }
+
   };
 
   useEffect(() => {
@@ -117,12 +121,14 @@ export default function FlipCardContainer() {
   return <>
     <ProgressBar percent={progressBarPercentValue} />
     <div className="flip-card-container">
+      <button type="button" className="arrow-btn" onClick={() => moveCard('ArrowLeft')}><CircleArrowLeft size={72} /></button>
       <FlipCard
         word={words[currentNum]}
         num={currentNum}
         handlePronounce={handlePronounce}
         turn={turn}
       />
+      <button type="button" className="arrow-btn" onClick={() => moveCard('ArrowRight')}><CircleArrowRight size={72} /></button>
     </div>
   </>
 }

@@ -46,3 +46,12 @@ body {
   background-color: blue;
   color: #fff;
 }
+
+.arrow-btn:hover {
+  background-color: blue;
+  color: #fff;
+}
+
+.arrow-btn:focus-visible {
+  outline: none;
+}
