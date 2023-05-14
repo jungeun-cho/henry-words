@@ -1,15 +1,17 @@
 import { Word } from '@/types';
 import Image from 'next/image';
 import SpeakerIcon from './icons/SpeakerIcon';
+import { Dispatch, SetStateAction } from 'react';
 
 type FlipCardProps = {
   word: Word;
   num: number;
   handlePronounce: (en: string) => void;
   turn: boolean;
+  setTurn: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function FlipCard({ word, num, handlePronounce, turn = false }: FlipCardProps) {
+export default function FlipCard({ word, num, handlePronounce, turn = false, setTurn }: FlipCardProps) {
   const { en, ko, img: imgSrc } = word;
 
   return (
@@ -18,7 +20,7 @@ export default function FlipCard({ word, num, handlePronounce, turn = false }: F
         <h1 className="card-count">{num}. {en}</h1>
         <button type="button" className="speaker-icon" onClick={() => handlePronounce(en)}><SpeakerIcon size={48} /></button>
       </div>
-      <div className={`flip-card ${turn ? 'turn' : ''}`}>
+      <div className={`flip-card ${turn ? 'turn' : ''}`} onClick={() => setTurn(!turn)}>
         <div className="flip-card-inner">
           <div className="flip-card-front">
             <h1>{en}</h1>

@@ -38,7 +38,7 @@ export default function FlipCardContainer() {
     const utter = new SpeechSynthesisUtterance(en);
 
     const voices = synth.getVoices();
-    const voice = voices.find(({ voiceURI }) => voiceURI === 'Google UK English Female');
+    const voice = voices.find(({ voiceURI }) => voiceURI === 'Alex');
 
     if (voice) {
       utter.voice = voice;
@@ -127,6 +127,7 @@ export default function FlipCardContainer() {
         num={currentNum}
         handlePronounce={handlePronounce}
         turn={turn}
+        setTurn={setTurn}
       />
       <button type="button" className="arrow-btn" onClick={() => moveCard('ArrowRight')}><CircleArrowRight size={72} /></button>
     </div>
